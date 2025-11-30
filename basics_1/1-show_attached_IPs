@@ -1,3 +1,2 @@
-#!/usr/bin/env bash
-# Displays all active IPv4 IPs
-hostname -I | tr ' ' '\n'
+#!/bin/bash
+ip addr show | grep "inet " | awk '{print $2}' | cut -d/ -f1
