@@ -1,11 +1,14 @@
 #!/usr/bin/env bash
 # Configures localhost to 127.0.0.2 and facebook.com to 8.8.8.8
 
-# Backup original hosts file
-cp /etc/hosts /etc/hosts.bak
+# Create temporary hosts file
+cp /etc/hosts /tmp/hosts.tmp
 
 # Configure localhost to 127.0.0.2
-sed -i 's/^127.0.0.1.*localhost/127.0.0.2\tlocalhost/g' /etc/hosts
+sed 's/^127\.0\.0\.1.*localhost/127.0.0.2\tlocalhost/g' /tmp/hosts.tmp > /tmp/hosts.new
 
 # Add facebook.com to resolve to 8.8.8.8
-echo "8.8.8.8    facebook.com" >> /etc/hosts
+echo "8.8.8.8    facebook.com" >> /tmp/hosts.new
+
+# Replace original hosts file
+cp /tmp/hosts.new /etc/hosts
